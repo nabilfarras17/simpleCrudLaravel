@@ -26,11 +26,18 @@ class UserReviewController extends Controller
             'rating' => 'required',
             'review' => 'required'
         ]);
+
+        if($request->rating < 1.0 || $request->rating > 5.0){
+            return response()->json("Review Only on range 1.0 - 5.0", 400);    
+        }
         $userReview = UserReview::create($request->all());
         return response()->json($userReview, 200);
     }
 
     public function update(Request $request, UserReview $userReview){
+        if($request->rating < 1.0 || $request->rating > 5.0){
+            return response()->json("Review Only on range 1.0 - 5.0", 400);    
+        }
         $userReview->update($request->all());
         return response()->json($userReview, 200);
     }
